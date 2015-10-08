@@ -155,7 +155,7 @@ class Game{
 
 		if (input[SDL_SCANCODE_C])
 		{
-			playerTank->extendLaser();
+			playerTank->extendLaser(gameRenderer);
 		}
 		else playerTank->retractLaser();
 	}
@@ -163,6 +163,7 @@ class Game{
 	void spawnMeteor()
 	{
 		//Randomly generate spawn coordinates for the meteor.
+		//PROBLEM: Generating meteors with no x or y velocity
 		int xSpawn = rand() % WINDOW_WIDTH;
 		int ySpawn = rand() % WINDOW_HEIGHT;
 		int xVel = (rand() % ((meteorMaxVelocity * 2) + 1)) + (-meteorMaxVelocity);
@@ -220,7 +221,6 @@ class Game{
 				}
 				else if (meteors[x]->detectWallCollision())
 				{
-					cout << "Meteor has hit a wall" << endl;
 					meteors[x]->destroyProjectile();
 					delete meteors[x];
 					meteors[x] = NULL;

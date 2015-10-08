@@ -6,7 +6,7 @@ Turret::Turret(Texture* texture, int rotateSpeed, SDL_Renderer* renderer)
 	Turret::rotateSpeed = rotateSpeed;
 	turretAngle = 0;
 	projectiles = vector<Projectile*>(5);
-	laser = new Laser(texture->getXCoord() + 40, texture->getYCoord() - 40, xTrajectory, yTrajectory, 20, 100, turretAngle-90, renderer);
+	laser = new Laser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, 20, 100, turretAngle-90, renderer);
 	laserOn = false;
 }
 
@@ -16,7 +16,7 @@ void Turret::rotateLeft()
 	texture->setAngle(turretAngle);
 	setTrajectory();
 
-	laser->updateLaser(texture->getXCoord() + 40, texture->getYCoord() - 40, xTrajectory, yTrajectory, turretAngle-90);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle-90);
 }
 
 void Turret::rotateRight()
@@ -25,7 +25,7 @@ void Turret::rotateRight()
 	texture->setAngle(turretAngle);
 	setTrajectory();
 
-	laser->updateLaser(texture->getXCoord() + 40, texture->getYCoord() - 40, xTrajectory, yTrajectory, turretAngle-90);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle-90);
 }
 
 void Turret::setPosition(int x, int y)
@@ -33,7 +33,7 @@ void Turret::setPosition(int x, int y)
 	texture->setCoords(x, y);
 	setTrajectory();
 
-	laser->updateLaser(texture->getXCoord() + 40, texture->getYCoord() - 40, xTrajectory, yTrajectory, turretAngle-90);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle-90);
 }
 
 void Turret::shoot(SDL_Renderer* renderer)
@@ -56,10 +56,10 @@ void Turret::shoot(SDL_Renderer* renderer)
 	}
 }
 
-void Turret::extendLaser()
+void Turret::extendLaser(SDL_Renderer* renderer)
 {
 	laserOn = true;
-	//laser->extend();
+	laser->extend(renderer);
 }
 
 void Turret::detractLaser()

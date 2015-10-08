@@ -60,9 +60,9 @@ void Tank::shoot(SDL_Renderer* renderer)
 	tankTurret->shoot(renderer);
 }
 
-void Tank::extendLaser()
+void Tank::extendLaser(SDL_Renderer* renderer)
 {
-	tankTurret->extendLaser();
+	tankTurret->extendLaser(renderer);
 }
 
 void Tank::retractLaser()

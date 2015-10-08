@@ -37,7 +37,7 @@ Texture::~Texture()
 
 void Texture::render(SDL_Renderer* renderer)
 {
-	if (SDL_RenderCopyEx(renderer, texture, &source, &dest, angle, NULL, SDL_FLIP_NONE) == -1)
+	if (SDL_RenderCopyEx(renderer, texture, &source, &dest, angle, center, SDL_FLIP_NONE) == -1)
 	{
 		cout << "SDL_RENDERCOPYEX FAILED" << endl;
 	}
@@ -56,6 +56,11 @@ void Texture::setDest(SDL_Rect dest)
 void Texture::setAngle(double angle)
 {
 	Texture::angle = angle;
+}
+
+void Texture::setRotationPoint(SDL_Point* center)
+{
+	Texture::center = center;
 }
 
 void Texture::setCoords(int x, int y)

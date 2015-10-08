@@ -33,7 +33,7 @@ public:
 	Tank(Texture* texture, int accelerateSpeed, int rotateSpeed, int turretRotateSpeed, SDL_Renderer* renderer);
 	void accelerate(int direction, float elaspedTime);
 	void shoot(SDL_Renderer* renderer);
-	void extendLaser();
+	void extendLaser(SDL_Renderer* renderer);
 	void retractLaser();
 	void updateProjectiles();
 	bool projectilesExist();

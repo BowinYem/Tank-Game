@@ -33,7 +33,7 @@ public:
 	void rotateRight();
 	void setPosition(int x, int y);
 	void shoot(SDL_Renderer* renderer);
-	void extendLaser();
+	void extendLaser(SDL_Renderer* renderer);
 	void detractLaser();
 	bool projectilesExist();
 	bool detectProjectileHit(SDL_Rect object);

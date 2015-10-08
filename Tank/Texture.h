@@ -13,6 +13,7 @@ protected:
 	SDL_Rect source;
 	SDL_Rect dest;
 	double angle = 0;
+	SDL_Point* center = NULL;
 
 public:
 	Texture();
@@ -23,6 +24,7 @@ public:
 	void setSource(SDL_Rect source);
 	void setDest(SDL_Rect dest);
 	void setAngle(double angle);
+	void setRotationPoint(SDL_Point* center);
 	void setCoords(int x, int y);
 	SDL_Rect getSource();
 	SDL_Rect getDest();

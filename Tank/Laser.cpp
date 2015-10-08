@@ -6,12 +6,17 @@ void Laser::extend(SDL_Renderer* renderer)
 	//1. place a SDL_Rect at x and y. These are the hitboxes.
 	//2. increment x and y by XVelocity and YVelocity, respectively.
 	//Do this until the laser hits the max length of the laser
+	int i = 0;
+	while (i < hitboxes.size())
+	{
+		hitboxes.insert(iterator, new Texture("hitbox.png", renderer, SDL_Rect{ 0, 0, 20, 20 }, SDL_Rect{ hitX, hitY, 20, 20 }));
+		iterator++;
 
-	hitboxes.insert(iterator, new Texture("hitbox.png", renderer, SDL_Rect{ 0, 0, 20, 20 }, SDL_Rect{ hitX, hitY, 20, 20 }));
-	iterator++;
+		hitX += run;
+		hitY += rise;
+		i++;
+	}
 
-	hitX += run;
-	hitY += rise;
 }
 
 void Laser::retract()
@@ -33,10 +38,21 @@ void Laser::updateLaser(int x, int y, int run, int rise, double angle)
 	Laser::run = run;
 	Laser::rise = rise;
 	texture->setAngle(angle);
+	texture->setRotationPoint(new SDL_Point{ 10, 10 });
+	hitboxes.clear();
+	hitX = 0;
+	hitY = 0;
+	//iterator = hitboxes.begin();
 }
 
 void Laser::render(SDL_Renderer* renderer)
 {
+
 	texture->render(renderer);
+
+	for (int i = 0; i < hitboxes.size(); i++)
+	{
+		hitboxes[i]->render(renderer);
+	}
 }
 
