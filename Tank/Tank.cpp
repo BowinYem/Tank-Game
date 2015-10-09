@@ -67,7 +67,7 @@ void Tank::extendLaser(SDL_Renderer* renderer)
 
 void Tank::retractLaser()
 {
-	tankTurret->detractLaser();
+	tankTurret->retractLaser();
 }
 
 void Tank::updateProjectiles()

@@ -6,7 +6,9 @@ Turret::Turret(Texture* texture, int rotateSpeed, SDL_Renderer* renderer)
 	Turret::rotateSpeed = rotateSpeed;
 	turretAngle = 0;
 	projectiles = vector<Projectile*>(5);
+	setTrajectory();
 	laser = new Laser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, 20, 100, turretAngle-90, renderer);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle - 90);
 	laserOn = false;
 }
 
@@ -62,10 +64,10 @@ void Turret::extendLaser(SDL_Renderer* renderer)
 	laser->extend(renderer);
 }
 
-void Turret::detractLaser()
+void Turret::retractLaser()
 {
 	laserOn = false;
-	//laser->retract();
+	laser->retract();
 }
 
 bool Turret::projectilesExist()

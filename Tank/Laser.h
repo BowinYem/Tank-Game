@@ -9,7 +9,6 @@ class Laser{
 protected:
 	Texture* texture;
 	vector<Texture*> hitboxes;
-	int iterator;
 	bool hit(SDL_Rect object);
 	int x, y; //Where the laser "begins"
 	int hitX, hitY; //These are for expanding the hitboxes
@@ -25,7 +24,6 @@ public:
 		hitboxes = vector<Texture*>(10);
 		texture = new Texture("projectile.png", renderer, SDL_Rect{ 0, 0, 20, 20 }, SDL_Rect{ x, y, width, maxLength });
 		texture->setAngle(angle);
-		iterator = 0;	
 	}
 
 	void extend(SDL_Renderer* renderer); //extend the hitboxes
