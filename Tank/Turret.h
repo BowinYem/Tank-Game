@@ -18,13 +18,13 @@ protected:
 	int curProjectiles = 0;
 	int maxProjectiles = 3;
 	bool projectilesOnScreen;
-	bool laserOn;
 	Texture* texture;
 	vector<Projectile*> projectiles;
 	vector<Projectile*>::iterator iterator;
 	Laser* laser;
 	void setTrajectory();
 	void renderProjectiles(SDL_Renderer* renderer);
+	SDL_Renderer* renderer;
 
 public:
 

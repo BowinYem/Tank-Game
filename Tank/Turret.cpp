@@ -1,6 +1,6 @@
 #include "Turret.h"
 
-Turret::Turret(Texture* texture, int rotateSpeed, SDL_Renderer* renderer)
+Turret::Turret(Texture* texture, int rotateSpeed, SDL_Renderer* renderer) :renderer(renderer)
 {
 	Turret::texture = texture;
 	Turret::rotateSpeed = rotateSpeed;
@@ -9,7 +9,6 @@ Turret::Turret(Texture* texture, int rotateSpeed, SDL_Renderer* renderer)
 	setTrajectory();
 	laser = new Laser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, 20, 100, turretAngle-90, renderer);
 	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle - 90);
-	laserOn = false;
 }
 
 void Turret::rotateLeft()
@@ -60,13 +59,11 @@ void Turret::shoot(SDL_Renderer* renderer)
 
 void Turret::extendLaser(SDL_Renderer* renderer)
 {
-	laserOn = true;
-	laser->extend(renderer);
+	laser->extend();
 }
 
 void Turret::retractLaser()
 {
-	laserOn = false;
 	laser->retract();
 }
 
@@ -160,9 +157,10 @@ void Turret::render(SDL_Renderer* renderer)
 {
 	texture->render(renderer);
 	renderProjectiles(renderer);
-	if (laserOn)
+
+	if (laser->isExtended())
 	{
-		laser->render(renderer);
+		laser->render();
 	}
 }
 
