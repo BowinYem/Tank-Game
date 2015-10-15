@@ -37,7 +37,7 @@ public:
 	void retractLaser();
 	void updateProjectiles();
 	bool projectilesExist();
-	bool detectProjectileHit(SDL_Rect object);
+	bool detectWeaponHit(SDL_Rect object);
 	void rotateLeft();
 	void rotateRight();
 	void rotateTurretLeft();

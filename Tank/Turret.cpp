@@ -7,8 +7,8 @@ Turret::Turret(Texture* texture, int rotateSpeed, SDL_Renderer* renderer) :rende
 	turretAngle = 0;
 	projectiles = vector<Projectile*>(5);
 	setTrajectory();
-	laser = new Laser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, 20, 100, turretAngle-90, renderer);
-	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle - 90);
+	laser = new Laser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, 30, 30, 20, renderer);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory);
 }
 
 void Turret::rotateLeft()
@@ -17,7 +17,7 @@ void Turret::rotateLeft()
 	texture->setAngle(turretAngle);
 	setTrajectory();
 
-	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle-90);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory);
 }
 
 void Turret::rotateRight()
@@ -26,7 +26,7 @@ void Turret::rotateRight()
 	texture->setAngle(turretAngle);
 	setTrajectory();
 
-	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle-90);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory);
 }
 
 void Turret::setPosition(int x, int y)
@@ -34,7 +34,7 @@ void Turret::setPosition(int x, int y)
 	texture->setCoords(x, y);
 	setTrajectory();
 
-	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory, turretAngle-90);
+	laser->updateLaser(texture->getXCoord(), texture->getYCoord(), xTrajectory, yTrajectory);
 }
 
 void Turret::shoot(SDL_Renderer* renderer)
@@ -72,17 +72,25 @@ bool Turret::projectilesExist()
 	return projectilesOnScreen;
 }
 
-bool Turret::detectProjectileHit(SDL_Rect object)
+bool Turret::detectWeaponHit(SDL_Rect object)
 {
+	//This functions checks to see if any of the turret's weapon have hit "object"
+
+	if (laser->isExtended())
+	{
+		if (laser->hit(object)) return true;	
+	}
+
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CHANGE THIS PART!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//THE PROJECTILE CLASS SHOULD BE DOING MOST OF THIS STUFF
 	//Iterate though all of the projectiles and see if any of them intersects with object
 	//If projectile has made contact, destroy the projectile
 	for (int i = 0; i < projectiles.size(); i++)
 	{
 		if (projectiles[i] != NULL)
 		{
-			if (SDL_HasIntersection(&object, &projectiles[i]->getDest()))
+			if (projectiles[i]->hit(object))
 			{
-				projectiles[i]->destroyProjectile();
 				delete projectiles[i];
 				projectiles[i] = NULL;
 				curProjectiles--; 
@@ -90,6 +98,7 @@ bool Turret::detectProjectileHit(SDL_Rect object)
 			}
 		}
 	}
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	return false;
 }
@@ -103,7 +112,6 @@ void Turret::updateProjectiles()
 		{
 			if (projectiles[x]->detectWallCollision())
 			{
-				projectiles[x]->destroyProjectile();
 				delete projectiles[x];
 				projectiles[x] = NULL;
 				curProjectiles--;

@@ -9,6 +9,11 @@ Projectile::Projectile(SDL_Renderer* renderer, int x, int y, int XVelocity, int 
 	texture = new Texture("projectile.png", renderer, SDL_Rect{ 0, 0, 4, 4 }, SDL_Rect{ x, y, spriteWidth, SpriteHeight });
 }
 
+Projectile::~Projectile()
+{
+	delete texture;
+}
+
 void Projectile::accelerate()
 {
 	x += XVelocity;
@@ -25,14 +30,15 @@ bool Projectile::detectWallCollision()
 	else return false;
 }
 
+bool Projectile::hit(SDL_Rect object)
+{
+	if (SDL_HasIntersection(&texture->getDest(), &object)) return true;
+	else return false;
+}
+
 void Projectile::render(SDL_Renderer* renderer)
 {
 	texture->render(renderer);
-}
-
-void Projectile::destroyProjectile()
-{
-	delete texture;
 }
 
 SDL_Rect Projectile::getDest()

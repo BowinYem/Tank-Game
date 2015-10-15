@@ -8,28 +8,31 @@ class Laser{
 
 protected:
 
+	//Dimensions of the laser sprite source
+	const int SPRITE_WIDTH = 20;
+	const int SPRITE_LENGTH = 20;
+
 	int x, y; //Where the laser "begins"
-	int hitX, hitY; //These are for expanding the hitboxes
-	int width; //width of the laser
+	int hitX, hitY; //These are for enlongating the hitboxes
+	int bitWidth, bitLength; //dimensions for each piece of "laser"
+	int totalLength; //the total number of "laser pieces" in our overall laser
 	int run, rise;
-	int maxLength;
-	double angle;
 	bool extended;
 
 	SDL_Renderer* renderer;
-	Texture* texture;
-	vector<Texture*> hitboxes;
-
-	bool hit(SDL_Rect object);
+	vector<Texture*> laserTextures;
 
 public:
 
-	Laser(int x, int y, int run, int rise, int width, int maxLength, double angle, SDL_Renderer* renderer);
-	void extend(); //extend the hitboxes
-	void retract(); //retract the hitboxes
-	void updateLaser(int x, int y, int run, int rise, double angle);
-	void render();
+	Laser(int x, int y, int run, int rise, int bitWidth, int bitLength, int totalLength, SDL_Renderer* renderer);
+	void extend(); 
+	void retract(); 
+	void updateLaser(int x, int y, int run, int rise);
 	bool isExtended();
+	bool hit(SDL_Rect object);
+	void increaseBitWidth(int x);
+	void increaseBitLength(int x);
+	void render();
 
 };
 

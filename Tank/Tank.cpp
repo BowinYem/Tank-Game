@@ -80,9 +80,9 @@ bool Tank::projectilesExist()
 	return tankTurret->projectilesExist();
 }
 
-bool Tank::detectProjectileHit(SDL_Rect object)
+bool Tank::detectWeaponHit(SDL_Rect object)
 {
-	return tankTurret->detectProjectileHit(object);
+	return tankTurret->detectWeaponHit(object);
 }
 
 void Tank::rotateLeft()

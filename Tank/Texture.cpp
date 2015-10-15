@@ -17,16 +17,36 @@ Texture::Texture(char* path, SDL_Renderer* renderer)
 	}
 
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	if (texture == 0)
+	{
+		cout << "SDL_CREATETEXTUREFROMSURFACE FAILED";
+	}
+
 	SDL_FreeSurface(surface);
 }
 
-Texture::Texture(char* path, SDL_Renderer* renderer, SDL_Rect source, SDL_Rect dest)
+Texture::Texture(char* path, SDL_Renderer* renderer, SDL_Rect source, SDL_Rect dest) :source(source), dest(dest)
 {
 	SDL_Surface* surface = IMG_Load(path);
-	SDL_SetColorKey(surface, 1, SDL_MapRGB(surface->format, 0, 0xFF, 0xFF));
+
+	if (surface == NULL)
+	{
+		cout << "IMG_LOAD FAILED";
+	}
+
+	if (SDL_SetColorKey(surface, 1, SDL_MapRGB(surface->format, 0, 0xFF, 0xFF)) == -1)
+	{
+		cout << "SDL_SETCOLORKEY FAILED";
+	}
+
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
-	Texture::source = source;
-	Texture::dest = dest;
+
+	if (texture == 0)
+	{
+		cout << "SDL_CREATETEXTUREFROMSURFACE FAILED";
+	}
+
 	SDL_FreeSurface(surface);
 }
 

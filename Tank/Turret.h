@@ -18,13 +18,14 @@ protected:
 	int curProjectiles = 0;
 	int maxProjectiles = 3;
 	bool projectilesOnScreen;
+
 	Texture* texture;
-	vector<Projectile*> projectiles;
-	vector<Projectile*>::iterator iterator;
 	Laser* laser;
+	SDL_Renderer* renderer;
+	vector<Projectile*> projectiles;
+
 	void setTrajectory();
 	void renderProjectiles(SDL_Renderer* renderer);
-	SDL_Renderer* renderer;
 
 public:
 
@@ -36,7 +37,7 @@ public:
 	void extendLaser(SDL_Renderer* renderer);
 	void retractLaser();
 	bool projectilesExist();
-	bool detectProjectileHit(SDL_Rect object);
+	bool detectWeaponHit(SDL_Rect object);
 	void updateProjectiles();
 	void render(SDL_Renderer* renderer);
 	void destroyTurret();

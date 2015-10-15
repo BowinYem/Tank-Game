@@ -194,12 +194,11 @@ class Game{
 		{
 			if (meteors[x] != NULL)
 			{
-				if (playerTank->detectProjectileHit(meteors[x]->getDest()))
+				if (playerTank->detectWeaponHit(meteors[x]->getDest()))
 				{
 					if (meteors[x]->getHealth() <= 0)
 					{
 						cout << "Meteor Destroyed" << endl;
-						meteors[x]->destroyProjectile();
 						delete meteors[x];
 						meteors[x] = NULL;
 						currentMeteors--;
@@ -214,14 +213,12 @@ class Game{
 				else if (playerTank->detectColision(meteors[x]->getDest()))
 				{
 					cout << "You were hit" << endl;
-					meteors[x]->destroyProjectile();
 					delete meteors[x];
 					meteors[x] = NULL;
 					currentMeteors--;
 				}
 				else if (meteors[x]->detectWallCollision())
 				{
-					meteors[x]->destroyProjectile();
 					delete meteors[x];
 					meteors[x] = NULL;
 					currentMeteors--;
