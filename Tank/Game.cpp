@@ -54,6 +54,11 @@ class Game{
 	void init()
 	{
 
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+		{
+			cout << "SDL_INIT has Failed";
+		}
+
 		gameWindow = SDL_CreateWindow("TANK GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, NULL);
 
 		if (gameWindow == 0)
@@ -92,6 +97,7 @@ class Game{
 		gameWindow = NULL;
 		gameRenderer = NULL;
 		playerTank->destroyTank();
+		SDL_Quit();
 	}
 
 	void getInput()
