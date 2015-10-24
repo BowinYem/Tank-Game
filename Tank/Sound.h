@@ -12,6 +12,7 @@ private:
 	
 public:
 
+	Sound(){};
 	Sound(char* path);
 	~Sound();
 	void play();

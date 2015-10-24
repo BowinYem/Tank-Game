@@ -1,10 +1,12 @@
 #include "Texture.h"
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <iostream>
 #include <math.h>
 #include <vector>
 #include "Tank.h"
 #include "Meteor.h"
+#include "Music.h"
 
 class Game{
 
@@ -50,7 +52,11 @@ class Game{
 	SDL_Renderer* gameRenderer;
 	SDL_Event e;
 	bool quit = false;
-	
+
+	//MUSIC/SOUND STUFF
+	Music* music;
+	bool musicPlaying = false;
+
 	void init()
 	{
 
@@ -83,11 +89,18 @@ class Game{
 			cout << "SDL_SetRenderDrawColor has Failed";
 		}
 
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			cout << "Mix_OpenAudio has Failed";
+		}
+
 		
 		playerTank = new Tank(new Texture("player.png", gameRenderer, SDL_Rect{0, 0, 20, 20}, SDL_Rect{PLAYER_SPAWN_X, PLAYER_SPAWN_Y, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT}), 
 			TANK_SPEED, TANK_ROTATE_SPEED, TURRET_ROTATE_SPEED, gameRenderer); 
 
 		meteors = vector<Meteor*>(MAX_METEORS);
+
+		music = new Music("music.wav");
 	}
 
 	void clean()
@@ -97,6 +110,9 @@ class Game{
 		gameWindow = NULL;
 		gameRenderer = NULL;
 		playerTank->destroyTank();
+
+		Mix_Quit();
+		IMG_Quit();
 		SDL_Quit();
 	}
 
@@ -164,6 +180,21 @@ class Game{
 			playerTank->extendLaser(gameRenderer);
 		}
 		else playerTank->retractLaser();
+
+		if (input[SDL_SCANCODE_P])
+		{
+			if (!musicPlaying)
+			{
+				music->play();
+				musicPlaying = true;
+			}
+			else music->unpause();
+		}
+
+		if (input[SDL_SCANCODE_O])
+		{
+			music->pause();
+		}
 	}
 
 	void spawnMeteor()
