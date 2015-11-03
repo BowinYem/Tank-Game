@@ -7,6 +7,8 @@
 #include "Tank.h"
 #include "Meteor.h"
 #include "Music.h"
+#include "Animation.h"
+#include "Text.h"
 
 class Game{
 
@@ -57,6 +59,10 @@ class Game{
 	Music* music;
 	bool musicPlaying = false;
 
+	//TEST STUFF
+	Animation* testAnimation;
+	Text* sampleText;
+
 	void init()
 	{
 
@@ -101,6 +107,9 @@ class Game{
 		meteors = vector<Meteor*>(MAX_METEORS);
 
 		music = new Music("music.wav");
+
+		testAnimation = new Animation(new Texture("testSheet.png", gameRenderer, SDL_Rect{ 0, 0, 100, 100 }, SDL_Rect{ 0, 0, 20, 20 }), 20, 20, gameRenderer, 4, 500, 2);
+		sampleText = new Text("This is a test. This is not the real thing.", )
 	}
 
 	void clean()
@@ -282,6 +291,7 @@ class Game{
 
 		playerTank->render(gameRenderer);
 		renderMeteors();
+		testAnimation->render();
 		SDL_RenderPresent(gameRenderer);
 	}
 
